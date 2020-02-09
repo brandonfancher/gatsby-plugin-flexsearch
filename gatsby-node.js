@@ -6,7 +6,9 @@ global.FlexSearch = require('flexsearch')
 exports.onPostBootstrap = function(_ref, options) {
   const { getNodes } = _ref
 
-  const { type } = options
+  const { filter, type } = options
+  const defaultFilter = () => true
+  const nodeFilter = filter || defaultFilter
 
   const _options$langua = options.languages
   const languages = _options$langua === undefined ? ['en'] : _options$langua
@@ -36,8 +38,8 @@ exports.onPostBootstrap = function(_ref, options) {
 
         // load language files if needed by stemmer or filter
         if (
-          index_.attrs.stemmer !== undefined ||
-          index_.attrs.filter !== undefined
+          index.attrs.stemmer !== undefined ||
+          index.attrs.filter !== undefined
         ) {
           try {
             if (lng === 'en') {
@@ -58,11 +60,7 @@ exports.onPostBootstrap = function(_ref, options) {
       }
 
       getNodes()
-        .filter(node => {
-          if (node.internal.type === type) {
-            return node
-          }
-        })
+        .filter(node => node.internal.type === type && nodeFilter(node))
         .forEach((n, i) => {
           const id = i
           if (index_.indexed) {
