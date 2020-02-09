@@ -13,7 +13,7 @@
   "author": "Tiago Santos",
   "license": "MIT",
   "dependencies": {
-    "flexsearch": "^0.3.61",
+    "flexsearch": "^0.6.32",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.11"
   },
