@@ -56,11 +56,7 @@ exports.onPostBootstrap = function(_ref, options) {
           }
         }
 
-        if (index_.preset) {
-          index.values = new FlexSearch(index_.preset, attrs)
-        } else {
-          index.values = new FlexSearch(attrs)
-        }
+        index.values = new FlexSearch(attrs)
       }
 
       getNodes()
