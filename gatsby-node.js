@@ -33,7 +33,7 @@ exports.onPostBootstrap = function(_ref, options) {
       index.name = index_.name
 
       if (index_.indexed) {
-        const attrs = index_.attributes
+        const attrs = index_.attributes || {}
         index.attrs = attrs
 
         // load language files if needed by stemmer or filter
@@ -56,7 +56,11 @@ exports.onPostBootstrap = function(_ref, options) {
           }
         }
 
-        index.values = new FlexSearch(attrs)
+        if (index_.preset) {
+          index.values = new FlexSearch(index_.preset, attrs)
+        } else {
+          index.values = new FlexSearch(attrs)
+        }
       }
 
       getNodes()
