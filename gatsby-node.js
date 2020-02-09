@@ -1,5 +1,5 @@
-const _ = require('lodash')
 const fs = require('fs')
+
 // set flexsearch object as a global variable to make it available to language files
 global.FlexSearch = require('flexsearch')
 
@@ -68,12 +68,12 @@ exports.onPostBootstrap = function(_ref, options) {
         .forEach((n, i) => {
           const id = i
           if (index_.indexed) {
-            const content = _.get(n, index_.resolver)
+            const content = index_.resolver(n)
             index.values.add(id, content)
           }
           const nodeContent = {}
           fieldsToStore.forEach(field => {
-            nodeContent[field.name] = _.get(n, field.resolver)
+            nodeContent[field.name] = field.resolver(n)
           })
           if (!nid.includes(id)) {
             store.push({ id, node: nodeContent })
